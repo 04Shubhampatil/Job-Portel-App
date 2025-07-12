@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import connectDB from './util/db.js';
 import userRoute from './routes/user.route.js'
 import companyRoute from './routes/company.route.js'
+import jobRoute from './routes/job.route.js'
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -20,6 +21,8 @@ app.get('/', (req, res) => {
 app.use('/api/v1/user',userRoute)
 
 app.use('/api/v1/company',companyRoute)
+
+app.use('/api/v1/job',jobRoute)
 
 
 

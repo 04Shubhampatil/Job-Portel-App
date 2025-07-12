@@ -11,11 +11,15 @@ const jobSchema = new Schema({
         
     },
      requirments: {
-        type: String,
+        type: [String],
         required: true,
     },
     salary:{
-        type: String,
+        type: Number,
+        required: true,
+    },
+    experienceLevel:{
+        type: Number,
         required: true,
     },
     location: {
