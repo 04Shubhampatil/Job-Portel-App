@@ -14,7 +14,10 @@ const PORT = process.env.PORT || 5000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));// parse application/x-www-form-urlencoded
 app.use(cookieParser())
-app.use(cors())
+app.use(cors({
+   origin: "http://localhost:5173", // or "*" for all origins
+  credentials: true,
+}));
 
 app.get('/', (req, res) => {
     res.send('Hello World!');

@@ -1,35 +1,32 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import Navbar from './components/shared/Navbar.jsx'
-import Login from './auth/Login.jsx'
-import Signup from './auth/Signup.jsx'
-import Home from './components/Home.jsx'
-
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Navbar from "./components/shared/Navbar.jsx";
+import Login from "./auth/Login.jsx";
+import Signup from "./auth/Signup.jsx";
+import Home from "./components/Home.jsx";
 
 const approuter = createBrowserRouter([
+
+
   {
     path: "/",
-    element:<Home/>
+    element: <Home />,
   },
   {
     path: "/login",
-    element:<Login/>
+    element: <Login />,
   },
   {
     path: "/signup",
-    element:<Signup/>
+    element: <Signup />,
   },
-  
-  
-])
-
+]);
 
 function App() {
   return (
     <div>
-      
-     <RouterProvider router={approuter} />
+      <RouterProvider router={approuter} />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
