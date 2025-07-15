@@ -1,12 +1,6 @@
 {
-  "files": [],
+  // "files": [], // Removed to include all files in the project automatically
   "references": [
-    {
-      "path": "./jsconfig.app.json"
-    },
-    {
-      "path": "./jsconfig.node.json"
-    }
   ],
   "compilerOptions": {
     "baseUrl": ".",

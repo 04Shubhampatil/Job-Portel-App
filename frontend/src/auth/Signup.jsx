@@ -7,6 +7,9 @@ import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "sonner";
+import { setLoading } from "../redux/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { Loader2 } from "lucide-react";
 
 function Signup() {
   const [input, setInput] = React.useState({
@@ -17,6 +20,8 @@ function Signup() {
     role: "",
   });
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { loading } = useSelector((store) => store.auth);
 
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
@@ -29,6 +34,7 @@ function Signup() {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
+      dispatch(setLoading(true));
       const formData = new FormData();
 
       // Append text fields
@@ -53,21 +59,24 @@ function Signup() {
           withCredentials: true,
         }
       );
-      console.log(res.data.responce)
+      console.log(res.data.responce);
       if (res.data.success) {
         setTimeout(() => {
           navigate("/login");
         }, 1000);
         toast.success(res.data.message);
       } else {
-        toast.error(res.data.message || "Registration failed. Please try again.");
+        toast.error(
+          res.data.message || "Registration failed. Please try again."
+        );
       }
-      
     } catch (error) {
       toast.error(
         error.response?.data?.message ||
           "Registration failed. Please try again."
       );
+    } finally {
+      dispatch(setLoading(false));
     }
   };
 
@@ -161,9 +170,18 @@ function Signup() {
               />
             </div>
           </div>
-          <Button className="w-full my-2" type="submit">
-            Sign UP
-          </Button>
+
+          {loading ? (
+            <Button className="w-full my-2">
+              <Loader2 className="mr-2 h-4 w-4 animate-spin " />
+              Please wait{" "}
+            </Button>
+          ) : (
+            <Button className="w-full my-2" type="submit">
+              Sign UP
+            </Button>
+          )}
+
           <span className="text-sm">
             Alredy have an account?
             <Link to="/login" className="text-indigo-600">
@@ -177,5 +195,3 @@ function Signup() {
 }
 
 export default Signup;
-
-

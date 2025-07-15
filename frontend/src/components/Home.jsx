@@ -1,11 +1,20 @@
 import React from 'react'
-import Navbar from './shared/Navbar'
+import Navbar from './shared/Navbar.jsx'
+import HeroSection from './Herosection.jsx'
+import CategouryCarousel from './CategouryCarousel.jsx'
+import LatestJobs from './LatestJobs.jsx'
+import Footer from './Footer.jsx'
 
 function Home() {
   return (
     <div>
         <Navbar/>
-        <h1>Wlcome to home page</h1>
+       <HeroSection/>
+     <CategouryCarousel/>
+     
+
+      <LatestJobs/>
+      <Footer/> 
     </div>
   )
 }

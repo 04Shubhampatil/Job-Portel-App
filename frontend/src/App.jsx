@@ -3,6 +3,7 @@ import Navbar from "./components/shared/Navbar.jsx";
 import Login from "./auth/Login.jsx";
 import Signup from "./auth/Signup.jsx";
 import Home from "./components/Home.jsx";
+import Jobs from "./components/Jobs.jsx";
 
 const approuter = createBrowserRouter([
 
@@ -19,6 +20,10 @@ const approuter = createBrowserRouter([
     path: "/signup",
     element: <Signup />,
   },
+  {
+    path: "/jobs",
+    element: <Jobs />,
+  }
 ]);
 
 function App() {
