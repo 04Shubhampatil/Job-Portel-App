@@ -1,9 +1,10 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Navbar from "./components/shared/Navbar.jsx";
 import Login from "./auth/Login.jsx";
 import Signup from "./auth/Signup.jsx";
 import Home from "./components/Home.jsx";
 import Jobs from "./components/Jobs.jsx";
+import Browse from "./components/Browse.jsx";
+import Profile from "./components/Profile.jsx";
 
 const approuter = createBrowserRouter([
 
@@ -23,7 +24,16 @@ const approuter = createBrowserRouter([
   {
     path: "/jobs",
     element: <Jobs />,
-  }
+  },
+  {
+    path: "/profile",
+    element: <Profile />,
+  },
+  {
+    path: "/browse",
+    element: <Browse />,
+  },
+
 ]);
 
 function App() {

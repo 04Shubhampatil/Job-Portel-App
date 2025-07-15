@@ -7,8 +7,9 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { User2, LogOut } from "lucide-react";
+import { useSelector } from "react-redux";
 function Navbar() {
-  const user = false;
+  const {user} = useSelector((state) => state.auth);
   return (
     <div className="bg-white">
       <div className="flex items-center justify-between  max-w-5xl h-16 mx-auto">
@@ -21,7 +22,7 @@ function Navbar() {
           <ul className="flex font-medium items-center gap-5">
             <li><Link to="/">Home</Link></li>
             <li><Link to="/jobs">Jobs</Link> </li>
-            <li><Link to="/companies">Companies</Link> </li>
+            <li><Link to="/browse">Browse</Link> </li>
           </ul>
 
           {!user ? ( //chack karna hai ki user true hai ya false hai
@@ -61,7 +62,7 @@ function Navbar() {
                 <div className="flex flex-col my-2  text-gray-600">
                   <div className="flex items-center gap-1 cursor-pointer">
                     <User2 />
-                    <Button variant="link">View Profile</Button>
+                    <Button variant="link"><Link to="/profile">Profile</Link></Button>
                   </div>
                   <div className="flex items-center gap-1 cursor-pointer">
                     <LogOut />

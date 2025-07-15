@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge"
 
 function Job() {
   return (
-    <div className="p-4 rounded-md shadow-xl bg-white border-gray-100">
+    <div className="p-4 rounded-md shadow-xl bg-white border-gray-100 ">
       <div className="flex items-center justify-between">
         <p className="item-sm text-gray-500">2 day ago </p>
       <Button variant={"outline"} className={"rounded-full"} size={"icon"}>
