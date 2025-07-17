@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { setLoading } from "../redux/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Loader2 } from "lucide-react";
+import { USER_API_END_POINT } from "@/utils/content";
 
 function Signup() {
   const [input, setInput] = React.useState({
@@ -50,7 +51,7 @@ function Signup() {
       }
 
       const res = await axios.post(
-        "http://localhost:5500/api/v1/user/register",
+           `${USER_API_END_POINT}/ register`,
         formData,
         {
           headers: {

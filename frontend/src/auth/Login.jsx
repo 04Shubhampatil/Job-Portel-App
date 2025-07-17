@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoading, setUser } from "../redux/authSlice";
 import { Loader2 } from "lucide-react";
+import { USER_API_END_POINT } from "@/utils/content";
 
 function Login() {
   const [input, setInput] = React.useState({
@@ -31,16 +32,12 @@ function Login() {
       dispatch(setLoading(true));
       const formData = new FormData();
 
-      const res = await axios.post(
-        "http://localhost:5500/api/v1/user/login",
-        input,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        }
-      );
+      const res = await axios.post(`${USER_API_END_POINT}/login`, input, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
       if (res.data.success) {
         dispatch(setUser(res.data.user));
         setTimeout(() => {

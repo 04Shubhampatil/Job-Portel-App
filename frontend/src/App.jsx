@@ -5,6 +5,7 @@ import Home from "./components/Home.jsx";
 import Jobs from "./components/Jobs.jsx";
 import Browse from "./components/Browse.jsx";
 import Profile from "./components/Profile.jsx";
+import JobDescription from "./components/JobDescription.jsx";
 
 const approuter = createBrowserRouter([
 
@@ -25,6 +26,11 @@ const approuter = createBrowserRouter([
     path: "/jobs",
     element: <Jobs />,
   },
+  {
+    path: "/description/:id",
+    element: <JobDescription />,
+  },
+  
   {
     path: "/profile",
     element: <Profile />,

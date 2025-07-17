@@ -157,6 +157,7 @@ const updateProfile = async (req, res) => {
         if (email) user.email = email;
         if (phoneNumber) user.phoneNumber = phoneNumber;
         if (bio) user.profile.bio = bio;
+        if(file) user.profile.resume
         if (skillsArray.length) user.profile.skills = skillsArray;
 
         // Resume or image file processing (cloudinary) would go here
