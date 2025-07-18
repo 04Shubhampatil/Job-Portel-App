@@ -51,7 +51,7 @@ function Signup() {
       }
 
       const res = await axios.post(
-           `${USER_API_END_POINT}/ register`,
+           `${USER_API_END_POINT}/register`,
         formData,
         {
           headers: {
@@ -71,6 +71,8 @@ function Signup() {
           res.data.message || "Registration failed. Please try again."
         );
       }
+      
+      
     } catch (error) {
       toast.error(
         error.response?.data?.message ||
@@ -79,6 +81,7 @@ function Signup() {
     } finally {
       dispatch(setLoading(false));
     }
+    console.log(input);
   };
 
   return (

@@ -35,8 +35,48 @@ function UpdateProfile({ open, setOpen }) {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+ setLoading(true);
+    const formData = new FormData();
+    formData.append("fullname", input.fullname);
+    formData.append("email", input.email);
+    formData.append("phoneNumber", input.phoneNumber);
+    formData.append("bio", input.bio);
+    formData.append("skills", input.skills);
 
-  }
+    if (input.file) {
+      formData.append("file", input.file);
+    }
+    try {
+      const res = await axios.post(
+        `${USER_API_END_POINT}/profile/update`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          withCredentials: true,
+        }
+      );
+      if (res.data.success) {
+        dispatch(setUser(res.data.user));
+        toast.success(res.data.message);
+        
+        
+      }
+    } catch (error) {
+      console.log(error);
+
+      toast.error(error.response?.data?.message);
+      
+    }
+    finally{
+      setLoading(false);
+      setOpen(false);
+    }
+    
+  
+   
+  };
   return (
     <div>
       <Dialog open={open}>
@@ -132,7 +172,6 @@ function UpdateProfile({ open, setOpen }) {
                   id="file"
                   name="file"
                   type="file"
-                  
                   onChange={changeFileHandler}
                   className="col-span-3 px-2 py-1 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-zinc-400 "
                   placeholder="Enter your name"

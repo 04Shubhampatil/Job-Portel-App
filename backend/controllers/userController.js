@@ -1,11 +1,15 @@
 import User from "../models/userModel.js";
 import bcrypt from 'bcrypt'
 import jwtToken from 'jsonwebtoken'
+import getDataUri from "../util/datauri.js";
+import cloudinary from "../util/Cloudinary.js";
 
 const register = async (req, res) => {
     try {
         const { fullname, email, phoneNumber, password, role } = req.body;
         
+
+
         if (!fullname || !email || !phoneNumber || !password || !role) {
             return res.status(400).json(
                 {
@@ -15,6 +19,14 @@ const register = async (req, res) => {
             )
 
         }
+
+        
+          const file = req.file; // optional, for resume/profile image
+        const fileUri = getDataUri(file);
+        const cloudResponce = await cloudinary.uploader.upload(fileUri.content, {
+            resource_type: "auto",  //  Important for PDF, video, etc.
+        });
+
         const user = await User.findOne({ email })
         if (user) {
             return res.status(400).json({ message: "User already exists with this email", success: false })
@@ -27,8 +39,10 @@ const register = async (req, res) => {
             email,
             phoneNumber,
             password: haspassword,
-            role
+            role,
+            profile: {profilePhoto: cloudResponce.secure_url}
         })
+
         return res.status(201).json({
             message: "User registered successfully",
             user: newUser,
@@ -47,6 +61,7 @@ const login = async (req, res) => {
 
     try {
         const { email, password, role } = req.body;
+
 
         if (!email || !password || !role) {
             return res.status(400).json({
@@ -96,6 +111,7 @@ const login = async (req, res) => {
             role: user.role,
             profile: user.profile
 
+
         }
 
         return res
@@ -137,7 +153,17 @@ const logout = async (req, res) => {
 const updateProfile = async (req, res) => {
     try {
         const { fullname, email, phoneNumber, bio, skills } = req.body;
-        const file = req.files; // optional, for resume/profile image
+
+        const file = req.file; // optional, for resume/profile image
+        const fileUri = getDataUri(file);
+        const cloudResponce = await cloudinary.uploader.upload(fileUri.content, {
+            resource_type: "auto",  //  Important for PDF, video, etc.
+        });
+        // console.log(cloudResponce);
+
+
+
+
 
         const userId = req.id; // Make sure req.id is populated via middleware //this id comes from DB
         let user = await User.findById(userId);
@@ -149,20 +175,25 @@ const updateProfile = async (req, res) => {
             });
         }
 
-        // Process skills string into array
-        const skillsArray = skills ? skills.split(",") : [];
 
-        // ✅ Only update fields if they are provided
+        // Process skills string into array
+        let skillsArray = skills ? skills.split(",") : [];
+        //  Only update fields if they are provided
         if (fullname) user.fullname = fullname;
         if (email) user.email = email;
         if (phoneNumber) user.phoneNumber = phoneNumber;
         if (bio) user.profile.bio = bio;
-        if(file) user.profile.resume
         if (skillsArray.length) user.profile.skills = skillsArray;
 
-        // Resume or image file processing (cloudinary) would go here
+        if (file) {
+            user.profile.resume = cloudResponce.secure_url;//save the cloudinaru url
+            user.profile.resumeOriginalName = file.originalname;//save the originalfile name
+        }
+
+
 
         await user.save();
+
 
 
 
@@ -172,10 +203,15 @@ const updateProfile = async (req, res) => {
             success: true,
         });
     } catch (error) {
+        console.log(error);
         return res.status(500).json({
             message: "Internal server error",
             error: error.message,
+
+
         });
+
+
     }
 };
 

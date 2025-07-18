@@ -29,7 +29,7 @@ const userSchema = new Schema({
     },
    profile:{
     bio:{type:String},
-    skils:[{type:String}],
+    skills:[{type:String}],
     resume:{type:String},
     resumeOriginalName:{type:String},
     company:{
