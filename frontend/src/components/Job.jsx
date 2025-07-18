@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge"
 import { useNavigate } from "react-router-dom";
 
 
-function Job() {
+function Job({job}) {
   const  Jobid="5tede543ete66ete6"
   const navigate = useNavigate();
   return (
@@ -28,21 +28,21 @@ function Job() {
         </Avatar>
       </Button>
       <div>
-        <h1 className="font-semibold text-lg">Company Name</h1>
+        <h1 className="font-semibold text-lg">{job?.company?.name}</h1>
         <p className="text-sm text-gray-500">India</p>
       </div>
     </div>
     <div>
-    <h1 className="font-bold text-lg my-2 "> Job Title</h1>
-    <p className="text-sm text-gray-600">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Reiciendis corporis earum totam tempore? Illum, expedita deleniti blanditiis cupiditate quia eos.</p>
+    <h1 className="font-bold text-lg my-2 "> {job?.title}</h1>
+    <p className="text-sm text-gray-600">{job?.description}</p>
     </div>
     <div className="flex items-center gap-2 mt-3">
-      <Badge className='text-[#f83002] font-bold' variant={"ghost"}>12 Positions</Badge>
-      <Badge className='text-blue-700 font-bold' variant={"ghost"}>Part Time</Badge>
-      <Badge className='text-[#7209b7] font-bold' variant={"ghost"}>24 LPA</Badge>
+      <Badge className='text-[#f83002] font-bold' variant={"ghost"}>{job?.possition}Positions</Badge>
+      <Badge className='text-blue-700 font-bold' variant={"ghost"}>{job?.jobType}</Badge>
+      <Badge className='text-[#7209b7] font-bold' variant={"ghost"}>{job?.salary} LPA</Badge>
     </div>
     <div className="flex items-center gap-2 mt-4">
-    <Button onClick={() => navigate(`/description/:${Jobid}`)} variant={"outline"} >Details</Button>
+    <Button onClick={() => navigate(`/description/:${job?._id}`)} variant={"outline"} >Details</Button>
     <Button className="bg-[#6A38c2] hover:bg-[#6c5397]">Save For Later</Button>
     </div>
     </div>
