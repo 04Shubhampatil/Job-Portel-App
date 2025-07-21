@@ -4,7 +4,7 @@ import HeroSection from './Herosection.jsx'
 import CategouryCarousel from './CategouryCarousel.jsx'
 import LatestJobs from './LatestJobs.jsx'
 import Footer from './Footer.jsx'
-import useGetAllJobs from '../hooks/useGetAllJobs.js'
+import useGetAllJobs from '../hooks/useGetAllJobs.jsx'
 
 function Home() {
   useGetAllJobs()
