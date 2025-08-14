@@ -13,28 +13,27 @@ import axios from "axios";
 import { USER_API_END_POINT } from "@/utils/content";
 import { setUser } from "@/redux/authSlice";
 function Navbar() {
-
-  const {user} = useSelector((state) => state.auth);
-   const dispatch = useDispatch();
-   const  navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const logOutHandler = async () => {
-   try {
-    
-      const res = await axios.get(`${USER_API_END_POINT}/logout`,{withCredentials:true});
-      if(res.data.success){
+    try {
+      const res = await axios.get(`${USER_API_END_POINT}/logout`, {
+        withCredentials: true,
+      });
+      if (res.data.success) {
         dispatch(setUser(null));
         navigate("/");
         toast.success(res.data.message);
-
       }
-      if(res.data.success){
+      if (res.data.success) {
         toast.success(res.data.message);
       }
-   } catch (error) {
-    console.log(error);
-    
-    toast.error(error.response.data.message);
-   }
+    } catch (error) {
+      console.log(error);
+
+      toast.error(error.response.data.message);
+    }
   };
 
   return (
@@ -47,9 +46,28 @@ function Navbar() {
         </div>
         <div className="flex items-center gap-10">
           <ul className="flex font-medium items-center gap-5">
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/jobs">Jobs</Link> </li>
-            <li><Link to="/browse">Browse</Link> </li>
+            {user && user.role === "recruiter" ? (
+              <>
+                <li>
+                  <Link to="/admin/companies">Companies</Link>
+                </li>
+                <li>
+                  <Link to="/admin/jobs">Jobs</Link>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <Link to="/">Home</Link>
+                </li>
+                <li>
+                  <Link to="/jobs">Jobs</Link>
+                </li>
+                <li>
+                  <Link to="/browse">Browse</Link>
+                </li>
+              </>
+            )}
           </ul>
 
           {!user ? ( //chack karna hai ki user true hai ya false hai
@@ -87,13 +105,20 @@ function Navbar() {
                 </div>
 
                 <div className="flex flex-col my-2  text-gray-600">
-                  <div className="flex items-center gap-1 cursor-pointer">
-                    <User2 />
-                    <Button variant="link"><Link to="/profile">Profile</Link></Button>
-                  </div>
+                  {user && user.role === "student" && (
+                    <div className="flex items-center gap-1 cursor-pointer">
+                      <User2 />
+                      <Button variant="link">
+                        <Link to="/profile">Profile</Link>
+                      </Button>
+                    </div>
+                  )}
+
                   <div className="flex items-center gap-1 cursor-pointer">
                     <LogOut />
-                    <Button onClick={logOutHandler} variant="link">Log out</Button>
+                    <Button onClick={logOutHandler} variant="link">
+                      Log out
+                    </Button>
                   </div>
                 </div>
               </PopoverContent>

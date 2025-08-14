@@ -7,7 +7,9 @@ import cloudinary from "../util/Cloudinary.js";
 const register = async (req, res) => {
     try {
         const { fullname, email, phoneNumber, password, role } = req.body;
-        
+
+
+
 
 
         if (!fullname || !email || !phoneNumber || !password || !role) {
@@ -20,8 +22,7 @@ const register = async (req, res) => {
 
         }
 
-        
-          const file = req.file; // optional, for resume/profile image
+        const file = req.file; // optional, for resume/profile image
         const fileUri = getDataUri(file);
         const cloudResponce = await cloudinary.uploader.upload(fileUri.content, {
             resource_type: "auto",  //  Important for PDF, video, etc.
@@ -40,7 +41,7 @@ const register = async (req, res) => {
             phoneNumber,
             password: haspassword,
             role,
-            profile: {profilePhoto: cloudResponce.secure_url}
+            profile: { profilePhoto: cloudResponce.secure_url }
         })
 
         return res.status(201).json({
